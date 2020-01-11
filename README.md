@@ -2,11 +2,7 @@
 A simple but useful NodeJS compiler.
 ### Installation
 ``` bash
-sudo sh << END
-mkdir -p /usr/local/bin
-cp bin/nodejs-compiler /usr/local/bin/nodejs-compiler
-chmod +x /usr/local/bin/nodejs-compiler
-END
+npm install -g nodejs-compiler
 ```
 ### Usage
 ```
