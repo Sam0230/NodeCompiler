@@ -1,0 +1,26 @@
+{
+	"name": "node-compiler",
+	"description": "A simple but useful NodeJS compiler.",
+	"version": "2020.01.11",
+	"engines": {
+		"node": ">=8.8.0"
+	},
+	"author": "Sam0230",
+	"license": "BSD-3-Clause",
+	"bin": {
+		"node-compiler": "bin/node-compiler"
+	},
+	"dependencies": {
+		"uglify-es": ">=3.0.0"
+	},
+	"keywords": [
+		"compiler",
+		"obfuscator",
+		"obfuscate",
+		"uglifier",
+		"uglify",
+		"pack",
+		"packer"
+	],
+	"homepage": "https://github.com/Sam0230/NodeCompiler"
+}

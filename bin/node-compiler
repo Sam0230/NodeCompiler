@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+if (process.argv.length != 3) {
+	console.log("Usage:");
+	console.log("  " + process.argv[1] + " CODE");
+	console.log("  Example: " + process.argv[1] + ' "$(cat example.js)" >example.compiled.js');
+	process.exit(1);
+}
+let minify;
+try {
+	require("uglify-es");
+	minify = function (code) {
+		return require("uglify-es").minify(code, { mangle: { eval: true }, compress: { keep_infinity: true }, ecma: 7 }).code;
+	};
+} catch (e) {
+	console.warn("If you want to compile your code better, please install the requirement uglify-es.");
+	minify = function (code) {
+		return code;
+	};
+}
+let baseCode = `(() => { let vm = require("vm"), dummyCache = new vm.Script("").createCachedData(), cache = require("zlib").inflateRawSync(Buffer.from(__CACHE__, "base64")), len; (process.version.startsWith("v8.8.") || process.version.startsWith("v8.9.")) ? dummyCache.slice(16, 24).copy(cache, 16) : (process.version.startsWith("v12.") || process.version.startsWith("v13.")) ? dummyCache.slice(12, 16).copy(cache, 12) : dummyCache.slice(12, 20).copy(cache, 12); len = (process.version.startsWith('v8.8') || process.version.startsWith('v8.9')) ? (cache.slice(12, 16).reduce((sum, number, power) => sum += number * Math.pow(256, power), 0)) : (cache.slice(8, 12).reduce((sum, number, power) => sum + number * Math.pow(256, power), 0)); vm.compileFunction((len > 0) ? ("'" + "\\0".repeat(len - 2) + "'") : "", [], { filename: "\\0", cachedData: cache })(exports, require, module, __filename, __dirname); })();`;
+require("v8").setFlagsFromString("--no-lazy");
+if (process.argv[2].startsWith("#!/usr/bin/env node\n") || process.argv[2].startsWith("/usr/local/bin/node\n") || process.argv[2].startsWith("/usr/bin/node\n")) {
+	console.log("#!/usr/bin/env node");
+}
+console.log(minify(baseCode).replace("__CACHE__", "'" + require('zlib').deflateRawSync(require("vm").compileFunction(minify(process.argv[2]), ["exports", "require", "module", "__filename", "__dirname"], { filename: "\n", produceCachedData: true}).cachedData).toString("base64") + "'"));
