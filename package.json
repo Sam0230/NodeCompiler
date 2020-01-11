@@ -1,5 +1,5 @@
 {
-	"name": "node-compiler",
+	"name": "nodejs-compiler",
 	"description": "A simple but useful NodeJS compiler.",
 	"version": "2020.01.11",
 	"engines": {
@@ -8,7 +8,7 @@
 	"author": "Sam0230",
 	"license": "BSD-3-Clause",
 	"bin": {
-		"node-compiler": "bin/node-compiler"
+		"node-compiler": "bin/nodejs-compiler"
 	},
 	"dependencies": {
 		"uglify-es": ">=3.0.0"
@@ -22,5 +22,5 @@
 		"pack",
 		"packer"
 	],
-	"homepage": "https://github.com/Sam0230/NodeCompiler"
+	"homepage": "https://github.com/Sam0230/NodeJSCompiler"
 }
